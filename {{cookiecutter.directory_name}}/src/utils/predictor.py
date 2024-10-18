@@ -32,14 +32,14 @@ class Executor:
 
         # Prepare datasets and dataloaders
         train_dataset = data_generator.Dataset(self.path_trainset, transform=transform_pipeline)
-        train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=0, pin_memory=True)
+        train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle = True, num_workers = 4, pin_memory = True, prefetch_factor=2)
 
         if self.normalize:
             mean, std = self._calculate_normalization(train_loader)
             transform_pipeline = self._get_transform_pipeline(model_generator, mean, std)
 
         test_dataset = data_generator.Dataset(self.path_testset, transform=transform_pipeline)
-        test_loader = DataLoader(test_dataset, batch_size=batch_size, num_workers=0, pin_memory=True, shuffle=False, drop_last=True)
+        test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers = 4, pin_memory = True, prefetch_factor=2, drop_last=True)
 
         # Load and run the model
         self._run_inference(model_generator, test_loader, batch_size)

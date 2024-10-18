@@ -95,11 +95,11 @@ class Executor:
         # Prepare data loaders
         ds_train = data_generator.Dataset(self.path_dataset_train, transform=tt_transforms_train)
         ds_val = data_generator.Dataset(self.path_dataset_val, transform=tt_transforms)
-        
+
         dl_train = DataLoader(ds_train, batch_size=self.batch_size, shuffle=True, 
-                              num_workers=self.num_threads, pin_memory=True)
+                              num_workers=self.num_threads, pin_memory=True, prefetch_factor=2)
         dl_val = DataLoader(ds_val, batch_size=self.batch_size, shuffle=False, 
-                            num_workers=self.num_threads, pin_memory=True)
+                            num_workers=self.num_threads, pin_memory=True, prefetch_factor=2)
 
         # Naming convention for saving the model
         pth_name = f"{model_generator.name}_{self.opt_func}_{self.criterion}"
@@ -143,8 +143,8 @@ class Executor:
 
             # Pre-fetch data loader to calculate mean and std
             ds_train_1 = data_generator.Dataset(self.path_dataset_train, transform=tt_transforms)
-            dl_train_1 = DataLoader(ds_train_1, batch_size=self.batch_size, shuffle=True, 
-                                    num_workers=self.num_threads, pin_memory=True)
+            dl_train_1 = DataLoader(ds_train_1, batch_size=self.batch_size, shuffle=False, 
+                                    num_workers=self.num_threads, pin_memory=True, prefetch_factor=2)
 
             mean, std = self._calculate_mean_and_std(dl_train_1)
             logging.info(f"Calculated Mean: {mean.tolist()}, Std: {std.tolist()}")
