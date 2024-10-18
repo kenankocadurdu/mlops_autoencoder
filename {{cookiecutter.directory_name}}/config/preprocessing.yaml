@@ -1,30 +1,28 @@
-# Hydra configuration for data preprocessing pipeline
-
 hydra:
-  output_subdir: null  # No specific output sub-directory, using current directory
+  output_subdir: null
   run:
-    dir: .  # Run in the current directory
+    dir: .
 
 data:
-  raw_path: data/processed/  # Path to the raw data
-  processed_path: null  # Processed data path is not specified, please define if needed
+  raw_path: data/processed/
+  processed_path: null
   dirs:
-    - train  # Training dataset directory
-    - val  # Validation dataset directory
+    - train
+    - val
   classes:
-    - benign  # Class for benign samples
-    - malignant  # Class for malignant samples
-  file: png  # Format of the image files (e.g., PNG)
+    - benign
+    - malignant
+  file: png
 
 preprocessing:
-  _target_: utils.preprocessor.ImageProcessor  # Preprocessor ImageProcessor
-  image_size: 256  # Target size for image resizing (256x256)
-  remove_noise: False  # Whether to apply noise removal
-  apply_clahe: False  # Whether to apply Contrast Limited Adaptive Histogram Equalization (CLAHE)
-  apply_gamma_corr: False  # Whether to apply gamma correction
-  median_filter: False  # Whether to apply a median filter
-  adaptive_mean_filter: False  # Whether to apply adaptive mean filtering
-  gaussian_filter: False  # Whether to apply Gaussian filtering
+  _target_: utils.preprocessor.ImageProcessor
+  image_size: 256
+  remove_noise: False
+  apply_clahe: False
+  apply_gamma_corr: False
+  median_filter: False
+  adaptive_mean_filter: False
+  gaussian_filter: False
 
 defaults:
-  - _self_  # Use the current file's defaults
+  - _self_

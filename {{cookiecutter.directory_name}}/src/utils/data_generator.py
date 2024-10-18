@@ -59,5 +59,3 @@ class Dataset(data.Dataset):
         
         return image
 
-# Example usage:
-# dataset = ImageDataset(root_dir="/path/to/images", transform=transform)

@@ -52,6 +52,7 @@ class Executor:
     def __init__(self, path_dataset_train, path_dataset_val, batch_size: int, num_threads: int, device_id: int, 
                  num_epochs: int, lr: float, patience: int, opt_func: str, criterion: str, normalize: bool, 
                  ml_flow: bool, log_desc: str, path_testset: str, save_path: str, path_pth: str, load_w: bool) -> None:
+        
         self.path_dataset_train = path_dataset_train
         self.path_dataset_val = path_dataset_val
         self.batch_size = batch_size
@@ -106,8 +107,9 @@ class Executor:
         # Fit the model
         history, model_fit = model_arch.fit(self.num_epochs, self.lr, model_generator, dl_train, dl_val, 
                                             self.opt_func, self.patience, self.criterion, pth_name, self.ml_flow, 
-                                            self.log_desc, self.path_testset, self.save_path, self.path_pth, 
-                                            self.batch_size, tt_transforms, self.load_w)
+                                            self.log_desc, self.save_path, self.path_pth, 
+                                            self.batch_size, self.load_w)
+
 
     def _get_transforms(self, model_generator):
         """

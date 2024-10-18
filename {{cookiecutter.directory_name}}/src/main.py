@@ -105,6 +105,6 @@ def predict_autoencoder(config: DictConfig):
 
 
 if __name__ == "__main__":
-    preprocess_images()
+    #preprocess_images()
     train_autoencoder()
-    predict_autoencoder()
+    #predict_autoencoder()
