@@ -1,0 +1,44 @@
+# Hydra configuration for AutoEncoder model training and prediction
+
+hydra:
+  output_subdir: null  # No specific output directory, uses the current directory
+  run:
+    dir: .  # Default run directory is the current working directory
+
+autoencoder:
+  _target_: utils.model_generator.Generator  # Generator for the AutoEncoder model
+  name: AutoEncoder  # Name of the model
+  num_class: 1  # Number of classes (for binary classification)
+  image_size: 96  # Input image size
+
+autoencoder_params:
+  _target_: utils.trainer.executor  # Executor for training the AutoEncoder
+  path_dataset_train: data/train/Benign/  # Path to the training dataset
+  path_dataset_val: data/val/Benign/  # Path to the validation dataset
+  batch_size: 1  # Batch size for training
+  num_threads: 1  # Number of threads for data loading
+  device_id: 0  # ID of the GPU device to use (0 for the first GPU)
+  num_epochs: 100  # Number of training epochs
+  lr: 0.001  # Learning rate
+  patience: 10  # Early stopping patience
+  opt_func: Adamax  # Optimizer function
+  criterion: MSELoss  # Loss function (Mean Squared Error Loss)
+  normalize: False  # Whether to normalize the input images
+  ml_flow: True  # Enable logging with MLFlow
+  log_desc: Adamax - MSELoss  # Description for the logging
+  path_testset: data/val/Benign/  # Path to the test dataset
+  save_path: models  # Directory to save the model checkpoints
+  load_w: False  # Whether to load pre-trained weights
+  path_pth: models  # Path to the model weights
+
+autoencoder_prediction:
+  _target_: utils.predictor.executor  # Executor for model prediction
+  path_testset: data/val/Benign/  # Path to the test dataset for prediction
+  save_path: data/predicts/  # Directory to save the prediction outputs
+  path_pth: models/AutoEncoder_Adamax_MSELoss.pth  # Path to the trained model weights
+  normalize: False  # Whether to normalize the input images for prediction
+  path_trainset: data/val/Benign/  # Path to the training dataset (if needed for reference)
+  product: True  # Additional flag for prediction (explain this further if needed)
+
+defaults:
+  - _self_  # Use current file defaults
