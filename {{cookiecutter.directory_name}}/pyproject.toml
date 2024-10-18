@@ -6,7 +6,7 @@ authors = ["{{ cookiecutter.author_name }}"]
 
 [tool.poetry.dependencies]
 python = "{{ cookiecutter.compatible_python_versions }}"
-numpy = "<=1.9"
+numpy = ">=1.21.4,<2.0"
 hydra-core = "^1.3.2"
 torch = { url = "https://download.pytorch.org/whl/cu121/torch-2.1.0%2Bcu121-cp310-cp310-linux_x86_64.whl" }
 torchvision = { url = "https://download.pytorch.org/whl/cu121/torchvision-0.16.0%2Bcu121-cp310-cp310-linux_x86_64.whl" }
