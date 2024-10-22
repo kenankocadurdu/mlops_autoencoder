@@ -1,0 +1,42 @@
+hydra:
+  output_subdir: null
+  run:
+    dir: .
+
+autoencoder:
+  _target_: utils.model_generator.Generator
+  name: AutoEncoder
+  num_class: 1
+  image_size: 96
+
+autoencoder_params:
+  _target_: utils.trainer.Executor
+  path_dataset_train: data/train/Benign/
+  path_dataset_val: data/val/Benign/
+  batch_size: 1
+  num_threads: 4
+  device_id: 0
+  num_epochs: 100
+  lr: 0.001
+  patience: 10
+  opt_func: Adam
+  criterion: MSELoss
+  normalize: False
+  ml_flow: False
+  log_desc: Adam - MSELoss
+  path_testset: data/val/Benign/
+  save_path: models
+  load_w: False
+  path_pth: models
+
+autoencoder_prediction:
+  _target_: utils.predictor.Executor
+  path_testset: data/val/Benign/
+  save_path: data/predicts/
+  path_pth: models/......pth
+  normalize: False
+  path_trainset: data/train/Benign/
+  product: True
+
+defaults:
+  - _self_
